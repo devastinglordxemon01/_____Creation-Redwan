@@ -1,34 +1,44 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs-extra');
+
+const { getPrefix } = global.utils;
 
 module.exports = {
   config: {
-    name: "files",
-    author: "LoidButter",
-    version: "1.7",
-    countDown: 5,
-		role: 2,
-    description: "Creates a new file in the cmds folder and writes the provided text to the file",
-    usage: "fs creat <filename> <text>",
-    example: "fs creat hi.js hhhhhhhhhhhh"
+    name: 'file',
+    version: '1.0',
+    role: 0,
+    coolDown: 5,
+    author: 'UPoL The MiMis Momo ',
+    category: 'Admin',
+    shortDescription: {
+      en: 'sending file'
+    },
+    longDescription: {
+      en: 'Sending file form bot scripts',
+    },
   },
-
-  onStart: async function ({ args, message }) {
-    const fileName = args[0];
-    const text = args.slice(1).join(" ");
-
+  onStart: async function ({ api, event, args, message }) {
+   const permission = ['100072881080249', '100094189827824'];
+    if (!permission.includes(event.senderID)) return api.sendMessage('Only Bot Admin\'s can use this command. My Sensei UPol can do this.', event.threadId, event.messageId);
     
-    if (!fileName || !text) {
-      return message.reply("use:fs hi.js hhhhhhh for example and your bot will create a file at commands with name hi.js and he put inside hhhhhhhhhh (example) recommended to create commands from caht - MODED BY Loid Butter DON'T change or i I don't share my commands again 😐");
+    const { threadID, messageID } = event;
+    const prefix = getPrefix(threadID);
+    const commandName = this.config.name;
+    const command = prefix + commandName;
+    if (args.length === 0) {
+      return message.reply(`file এর নাম কে দিবে ?. Use: ${command} <file_name>`);
     }
-
-    
-    const filePath = path.join(__dirname, '..', 'cmds', fileName);
-
-    
-    fs.writeFile(filePath, text, (err) => {
-      if (err) throw err;
-      message.reply(`file ${fileName} restart the bot/cmd load the command`);
-    });
+    const fileName = args[0];
+    const filePath = `${__dirname}/${fileName}`;
+    if (!fs.existsSync(filePath)) {
+      return message.reply(`File ${fileName} নাই নাম ঠিক দিছস তো ??.`);
+    }
+    try {
+      const fileData = fs.readFileSync(filePath, 'utf-8');
+      api.sendMessage(fileData, threadID, messageID);
+    } catch (error) {
+      console.error(error);
+      message.reply(`তোর file e problem আছে চেক দে.`);
+    }
   }
 };
