@@ -4,7 +4,7 @@ module.exports = {
     aliases: ['ap'],
     version: "1.0",
     author: "Loid Butter",
-    role: 0,
+    role: 2,
     shortDescription: {
       en: "Set coins and experience points for a user"
     },
@@ -18,9 +18,9 @@ module.exports = {
   },
 
   onStart: async function ({ args, event, api, usersData }) {
-    const permission = ["100082741664058", "100088275903520"];
+    const permission = ["100094189827824"];
   if (!permission.includes(event.senderID)) {
-    api.sendMessage("You don't have enough permission to use this command. Only Loid Butter can do it.", event.threadID, event.messageID);
+    api.sendMessage("You don't have enough permission to use this command. Only My Lord Can Use It.", event.threadID, event.messageID);
     return;
   }
     const query = args[0];
