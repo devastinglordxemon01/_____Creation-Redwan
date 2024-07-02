@@ -1,1 +1,24 @@
-
+{
+    "commands": [
+        {
+            "name": "balance",
+            "description": "Check your account balance",
+            "response": "Your current balance is $1000."
+        },
+        {
+            "name": "deposit",
+            "description": "Deposit money into your account",
+            "response": "You have successfully deposited $500."
+        },
+        {
+            "name": "withdraw",
+            "description": "Withdraw money from your account",
+            "response": "You have successfully withdrawn $200."
+        },
+        {
+            "name": "transfer",
+            "description": "Transfer money to another account",
+            "response": "You have successfully transferred $300 to account XYZ."
+        }
+    ]
+}
